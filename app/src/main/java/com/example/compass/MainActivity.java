@@ -52,8 +52,14 @@ Direction direction ;
         super.onResume();
 
         // for the system's orientation sensor registered listeners
-        location.Onupdate();
-        direction.registerListeners();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                location.Onupdate();
+                direction.registerListeners();
+            }
+        });
+        thread.start();
     }
 
 
