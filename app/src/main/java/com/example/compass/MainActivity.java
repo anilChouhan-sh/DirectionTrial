@@ -1,50 +1,46 @@
 package com.example.compass;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements SensorEventListener  {
+public class MainActivity extends Activity  {
 
-    // define the display assembly compass picture
-    private ImageView image;
 
-    // record the compass picture angle turned
-    private float currentDegree = 0f;
+
     private View myview ;
-    // device sensor manager
-    private SensorManager mSensorManager;
-    float accelerometerReading[] =new float[3];
-    float magnetometerReading[] =new float[3];
-    TextView tvHeading;
+    TextView tvHeading ,tvLatitude , tvLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Degree.setDEGREE(0);
+        Values.setDEGREE(0);
         setContentView(R.layout.activity_main);
 
-        //
-//        image = (ImageView) findViewById(R.id.main_iv);
 
-        // TextView that will tell the user what degree is he heading
-        tvHeading = (TextView) findViewById(R.id.tvHeading);
+        tvHeading =  findViewById(R.id.tvHeading);
+        tvLatitude = findViewById(R.id.tvLatitude) ;
+        tvLongitude = findViewById(R.id.tvLongitude) ;
         myview = findViewById(R.id.myview) ;
-        // initialize your android device sensor capabilities
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-//        Intent intent =new Intent(this , CostumView1.class);
-//        startActivity(intent);
+        Location location = new Location(this) ;
+        Direction direction = new Direction(this) ;
 
+
+    }
+
+    void updateValues(){
+        tvHeading.setText(String.valueOf(Values.DEGREE));
+        tvLongitude.setText(String.valueOf(Values.X));
+        tvLatitude.setText(String.valueOf(Values.Y));
+
+        myview.postInvalidate();
     }
 
     @Override
@@ -52,10 +48,7 @@ public class MainActivity extends Activity implements SensorEventListener  {
         super.onResume();
 
         // for the system's orientation sensor registered listeners
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     @Override
@@ -63,55 +56,7 @@ public class MainActivity extends Activity implements SensorEventListener  {
         super.onPause();
 
         // to stop the listener and save battery
-        mSensorManager.unregisterListener(this);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-
-// Rotation matrix based on current readings from accelerometer and magnetometer.
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            accelerometerReading =event.values ;
-        }
-        else if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-            magnetometerReading =event.values ;
-        }
-        else return ;
-// Express the updated rotation matrix as three orientation angles.
-        final float[] rotationMatrix = new float[9];
-        SensorManager.getRotationMatrix(rotationMatrix, null,
-                accelerometerReading, magnetometerReading);
-        final float[] orientationAngles = new float[3];
-        SensorManager.getOrientation(rotationMatrix, orientationAngles);
-
-
-        // get the angle around the z-axis rotated
-        float degree = (float) ((Math.toDegrees(orientationAngles[0]) + 360)% 360);
-        degree = Math.round(degree);
-        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
-        Degree.setDEGREE(degree);
-        myview.postInvalidate();
-        // create a rotation animation (reverse turn degree degrees)
-//        RotateAnimation ra = new RotateAnimation(
-//                currentDegree, //from
-//                currentDegree-degree, //to
-//                Animation.RELATIVE_TO_SELF, 0.5f,                Animation.RELATIVE_TO_SELF,
-//                0.5f);
-//
-//        // how long the animation will take place
-//        ra.setDuration(210);
-//
-//        // set the animation after the end of the reservation status
-//       ra.setFillAfter(true);
-//
-//        // Start the animation
-//        image.startAnimation(ra);
-        currentDegree = -degree ;
 
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // not in use
-    }
 }

@@ -53,7 +53,7 @@ public  class CustomView extends View {
         canvas.save();
         matrix.reset();
         matrix.postScale(0.1f, 0.1f) ;
-        matrix.postRotate( Degree.DEGREE) ;
+        matrix.postRotate( Values.DEGREE) ;
         Bitmap bit = Bitmap.createBitmap(bitmapOrg , 0 ,0 ,   width , height , matrix ,true) ;
         Paint paint =new Paint() ;
         canvas.drawBitmap(bit ,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2,paint);
