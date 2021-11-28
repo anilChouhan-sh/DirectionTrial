@@ -1,24 +1,26 @@
 package com.example.compass;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements SensorEventListener {
+public class MainActivity extends Activity implements SensorEventListener  {
 
     // define the display assembly compass picture
     private ImageView image;
 
     // record the compass picture angle turned
     private float currentDegree = 0f;
-
+    private View myview ;
     // device sensor manager
     private SensorManager mSensorManager;
     float accelerometerReading[] =new float[3];
@@ -28,16 +30,21 @@ public class MainActivity extends Activity implements SensorEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Degree.setDEGREE(0);
         setContentView(R.layout.activity_main);
 
         //
-        image = (ImageView) findViewById(R.id.main_iv);
+//        image = (ImageView) findViewById(R.id.main_iv);
 
         // TextView that will tell the user what degree is he heading
         tvHeading = (TextView) findViewById(R.id.tvHeading);
-
+        myview = findViewById(R.id.myview) ;
         // initialize your android device sensor capabilities
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+//        Intent intent =new Intent(this , CostumView1.class);
+//        startActivity(intent);
+
     }
 
     @Override
@@ -82,22 +89,23 @@ public class MainActivity extends Activity implements SensorEventListener {
         float degree = (float) ((Math.toDegrees(orientationAngles[0]) + 360)% 360);
         degree = Math.round(degree);
         tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
-
+        Degree.setDEGREE(degree);
+        myview.postInvalidate();
         // create a rotation animation (reverse turn degree degrees)
-        RotateAnimation ra = new RotateAnimation(
-                currentDegree, //from
-                currentDegree+degree, //to
-                Animation.RELATIVE_TO_SELF, 0.5f,                Animation.RELATIVE_TO_SELF,
-                0.5f);
-
-        // how long the animation will take place
-        ra.setDuration(210);
-
-        // set the animation after the end of the reservation status
-       ra.setFillAfter(true);
-
-        // Start the animation
-        image.startAnimation(ra);
+//        RotateAnimation ra = new RotateAnimation(
+//                currentDegree, //from
+//                currentDegree-degree, //to
+//                Animation.RELATIVE_TO_SELF, 0.5f,                Animation.RELATIVE_TO_SELF,
+//                0.5f);
+//
+//        // how long the animation will take place
+//        ra.setDuration(210);
+//
+//        // set the animation after the end of the reservation status
+//       ra.setFillAfter(true);
+//
+//        // Start the animation
+//        image.startAnimation(ra);
         currentDegree = -degree ;
 
     }
