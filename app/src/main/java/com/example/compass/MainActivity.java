@@ -16,7 +16,8 @@ public class MainActivity extends Activity  {
 
     private View myview ;
     TextView tvHeading ,tvLatitude , tvLongitude;
-
+Location location ;
+Direction direction ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +30,19 @@ public class MainActivity extends Activity  {
         tvLongitude = findViewById(R.id.tvLongitude) ;
         myview = findViewById(R.id.myview) ;
 
-        Location location = new Location(this) ;
-        Direction direction = new Direction(this) ;
+        location = new Location(this) ;
+        direction = new Direction(this) ;
+
+        direction.initialize();
+        location.initialize();
 
 
     }
 
     void updateValues(){
         tvHeading.setText(String.valueOf(Values.DEGREE));
-        tvLongitude.setText(String.valueOf(Values.X));
-        tvLatitude.setText(String.valueOf(Values.Y));
+        tvLongitude.setText(String.valueOf(Values.Y));
+        tvLatitude.setText(String.valueOf(Values.X));
 
         myview.postInvalidate();
     }
@@ -48,13 +52,16 @@ public class MainActivity extends Activity  {
         super.onResume();
 
         // for the system's orientation sensor registered listeners
-
+        location.Onupdate();
+        direction.registerListeners();
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-
+        direction.unregisterListners();
+      //  location.unregister();
         // to stop the listener and save battery
 
     }

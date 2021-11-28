@@ -2,9 +2,9 @@ package com.example.compass;
 
 public class Values {
     static float DEGREE ;
-    static float X;
-    static float Y;
-    Values(float x, float y, float d){
+    static double X;
+    static double Y;
+    Values(double x, double y, float d){
         X =x ;
         Y =y ;
         DEGREE =d ;
@@ -25,10 +25,10 @@ public class Values {
         Values.DEGREE = DEGREE;
     }
 
-    public static void setX(float x) {
+    public static void setX(double x) {
         X = x;
     }
-    public static void setY(float y) {
+    public static void setY(double y) {
         Y = y;
     }
 }

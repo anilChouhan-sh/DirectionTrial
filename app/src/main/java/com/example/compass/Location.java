@@ -36,39 +36,32 @@ public class Location  {
         locationRequest.setInterval(1000);
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext) ;
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (android.location.Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    // ...
+                    Log.d("------location-----" , location.getLatitude() + " , " + location.getLongitude()) ;
+                    Values.setX(location.getLatitude());
+                    Values.setY(location.getLongitude());
+                    mContext.updateValues();
+                }
+            }
+        };
         Onupdate();
     }
 
     public void Onupdate(){
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext) ;
+
 
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-
-//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(mContext, new OnSuccessListener<android.location.Location>() {
-//                @Override
-//                public void onSuccess(android.location.Location location) {
-//                    //textView.setText(String.valueOf(location.getLatitude()));
-//                    textView1.setText(String.valueOf( location.getLongitude()));
-//                }
-//            });
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    if (locationResult == null) {
-                        return;
-                    }
-                    for (android.location.Location location : locationResult.getLocations()) {
-                        // Update UI with location data
-                        // ...
-                        Log.d("------location-----" , location.getLatitude() + " , " + location.getLongitude()) ;
-                    }
-                }
-            };
-
-
-
             fusedLocationProviderClient.requestLocationUpdates(locationRequest,
                     locationCallback,
                     Looper.getMainLooper());

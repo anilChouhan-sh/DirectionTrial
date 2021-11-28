@@ -53,6 +53,7 @@ public class Direction implements SensorEventListener {
 
         Values.setDEGREE(degree);
 
+        mContext.updateValues();
 
 
 
