@@ -80,26 +80,25 @@ public class MainActivity extends Activity implements SensorEventListener {
 
         // get the angle around the z-axis rotated
         float degree = (float) ((Math.toDegrees(orientationAngles[0]) + 360)% 360);
-
+        degree = Math.round(degree);
         tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
         // create a rotation animation (reverse turn degree degrees)
         RotateAnimation ra = new RotateAnimation(
-                currentDegree,
-                currentDegree+degree,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF,
+                currentDegree, //from
+                currentDegree+degree, //to
+                Animation.RELATIVE_TO_SELF, 0.5f,                Animation.RELATIVE_TO_SELF,
                 0.5f);
 
         // how long the animation will take place
         ra.setDuration(210);
 
         // set the animation after the end of the reservation status
-        ra.setFillAfter(true);
+       ra.setFillAfter(true);
 
         // Start the animation
         image.startAnimation(ra);
-        currentDegree = -degree +72;
+        currentDegree = -degree ;
 
     }
 

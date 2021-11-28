@@ -14,10 +14,11 @@
 
     <ImageView
         android:id="@+id/main_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+
+        android:layout_height="80dp"
         android:layout_below="@+id/tvHeading"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/img_compass" />
+        android:src="@drawable/ic_xabfr1__1_" />
 
 </RelativeLayout>
