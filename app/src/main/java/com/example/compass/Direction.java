@@ -12,7 +12,7 @@ public class Direction implements SensorEventListener {
     private SensorManager mSensorManager;
     private float accelerometerReading[] =new float[3];
     private float magnetometerReading[] =new float[3];
-
+    private int OldDegree;
 
     private MainActivity mContext ;
 
@@ -22,6 +22,7 @@ public class Direction implements SensorEventListener {
 
     public void initialize(){
         mSensorManager = (SensorManager) mContext.getSystemService(SENSOR_SERVICE);
+        OldDegree=0;
     }
 
     @Override
@@ -51,9 +52,14 @@ public class Direction implements SensorEventListener {
         float degree = (float) ((Math.toDegrees(orientationAngles[0]) + 360)% 360);
         degree = Math.round(degree);
 
-        Values.setDEGREE(degree);
+        if(Math.abs(OldDegree-degree)>5){
 
-        mContext.updateValues();
+            Values.setDEGREE(degree);
+
+            mContext.updateValues();
+        }
+        OldDegree=(int)degree;
+
 
 
 

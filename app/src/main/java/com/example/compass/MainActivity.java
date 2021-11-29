@@ -17,7 +17,7 @@ public class MainActivity extends Activity  {
 
     private View myview ;
     TextView tvHeading ,tvLatitude , tvLongitude;
-    Button moveup ,moveDown ;
+    Button moveup ,moveDown ,moveLeft,moveRight;
 Location location ;
 Direction direction ;
     @Override
@@ -25,10 +25,13 @@ Direction direction ;
         super.onCreate(savedInstanceState);
         Values.setDEGREE(0);
         Values.setY(0);
+        Values.setX(0);
         setContentView(R.layout.activity_main);
 
         moveup = findViewById(R.id.moveup);
         moveDown =findViewById(R.id.moveDown) ;
+        moveLeft = findViewById(R.id.moveleft);
+        moveRight= findViewById(R.id.moveright);
 
         tvHeading =  findViewById(R.id.tvHeading);
         tvLatitude = findViewById(R.id.tvLatitude) ;
@@ -52,6 +55,20 @@ Direction direction ;
             @Override
             public void onClick(View v) {
                 Values.setY(Values.Y - 40);
+                updateValues();
+            }
+        });
+        moveLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Values.setX(Values.X - 40);
+                updateValues();
+            }
+        });
+        moveRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Values.setX(Values.X + 40);
                 updateValues();
             }
         });

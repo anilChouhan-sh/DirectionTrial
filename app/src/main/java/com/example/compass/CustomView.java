@@ -67,7 +67,7 @@ public  class CustomView extends View {
         // matrix.postRotate( Values.DEGREE) ;
         Bitmap bit = Bitmap.createBitmap(bitmapOrg , 0 ,0 ,   width , height , matrix ,true) ;
         canvas.drawBitmap(bit,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2 ,null);
-        canvas.translate(0,(float) Values.Y);
+        canvas.translate((float)Values.X,(float)Values.Y);
         canvas.rotate(Values.DEGREE ,getWidth()/2 ,getHeight()/2);
         canvas.drawRect(rect,paint);
     }
