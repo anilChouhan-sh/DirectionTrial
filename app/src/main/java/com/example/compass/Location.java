@@ -1,13 +1,10 @@
 package com.example.compass;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
@@ -16,7 +13,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 public class Location  {
 
@@ -47,8 +43,8 @@ public class Location  {
                     // Update UI with location data
                     // ...
                     Log.d("------location-----" , location.getLatitude() + " , " + location.getLongitude()) ;
-                    Values.setX(location.getLatitude());
-                    Values.setY(location.getLongitude());
+                    Values.setLatitude(location.getLatitude());
+                    Values.setLongitude(location.getLongitude());
                     mContext.updateValues();
                 }
             }
