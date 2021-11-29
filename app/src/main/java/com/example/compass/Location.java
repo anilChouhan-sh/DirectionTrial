@@ -60,8 +60,16 @@ public class Location  {
 
 
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED ) {
+//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<android.location.Location>() {
+//                @Override
+//                public void onSuccess(android.location.Location location) {
+//                    Log.d("------location-----" , location.getLatitude() + " , " + location.getLongitude()) ;
+//                    Values.setX(location.getLatitude());
+//                    Values.setY(location.getLongitude());
+//                    mContext.updateValues();
+//                }
+//            });
             fusedLocationProviderClient.requestLocationUpdates(locationRequest,
                     locationCallback,
                     Looper.getMainLooper());
@@ -73,7 +81,8 @@ public class Location  {
 
         else {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                mContext.requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION , Manifest.permission.ACCESS_COARSE_LOCATION} ,99);
+                mContext.requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION} ,99);
+             //   mContext.requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION} ,98);
             }
         }
 
