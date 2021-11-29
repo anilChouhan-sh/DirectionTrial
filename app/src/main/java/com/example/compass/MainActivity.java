@@ -47,6 +47,7 @@ Direction direction ;
         myview.postInvalidate();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
