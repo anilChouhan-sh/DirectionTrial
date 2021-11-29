@@ -3,6 +3,7 @@ package com.example.compass;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -59,14 +60,14 @@ public  class CustomView extends View {
         rect.left = getWidth()/2;
         rect.bottom = getHeight()/2 +100-250;
         rect.right = getWidth()/2 + 50;
-
+      //  canvas.drawColor(Color.BLUE );
 
         matrix.reset();
         matrix.postScale(0.1f, 0.1f) ;
         // matrix.postRotate( Values.DEGREE) ;
         Bitmap bit = Bitmap.createBitmap(bitmapOrg , 0 ,0 ,   width , height , matrix ,true) ;
-        canvas.drawBitmap(bit,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2,null);
-
+        canvas.drawBitmap(bit,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2 ,null);
+        canvas.translate(0,(float) Values.Y);
         canvas.rotate(Values.DEGREE ,getWidth()/2 ,getHeight()/2);
         canvas.drawRect(rect,paint);
     }
