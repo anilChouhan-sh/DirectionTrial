@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -49,14 +51,23 @@ public  class CustomView extends View {
         int newWidth = (int) Math.round(bitmapOrg.getWidth()*0.1) ;
         int newHeight = (int) Math.round(bitmapOrg.getHeight()*0.1) ;
         int height = bitmapOrg.getHeight();
+        Paint paint =new Paint() ;
+        paint.setColor(Color.RED);
 
-        canvas.save();
+        Rect rect = new Rect();
+        rect.top = getHeight()/2-250 ;
+        rect.left = getWidth()/2;
+        rect.bottom = getHeight()/2 +100-250;
+        rect.right = getWidth()/2 + 50;
+
+
         matrix.reset();
         matrix.postScale(0.1f, 0.1f) ;
-        matrix.postRotate( Values.DEGREE) ;
+        // matrix.postRotate( Values.DEGREE) ;
         Bitmap bit = Bitmap.createBitmap(bitmapOrg , 0 ,0 ,   width , height , matrix ,true) ;
-        Paint paint =new Paint() ;
-        canvas.drawBitmap(bit ,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2,paint);
-        canvas.restore();
+        canvas.drawBitmap(bit,  getWidth()/2 - newWidth/2 ,getHeight()/2 -newHeight/2,null);
+
+        canvas.rotate(Values.DEGREE ,getWidth()/2 ,getHeight()/2);
+        canvas.drawRect(rect,paint);
     }
 }
